@@ -1,14 +1,14 @@
 package com.carol.forum.controller;
 
-import com.carol.forum.controller.dto.TopicoDto;
-import com.carol.forum.modelo.Topico;
-import com.carol.forum.repository.TopicoRepository;
+import com.carol.forum.TopicoService;
+import com.carol.forum.controller.dto.TopicoGetDto;
+import com.carol.forum.controller.dto.TopicoPostDto;
+import com.carol.forum.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,26 +17,30 @@ import java.util.List;
 public class TopicosController {
 
     @Autowired
-    TopicoRepository topicoRepository;
+    TopicoService topicoService;
 
     @GetMapping
-    ResponseEntity<List<TopicoDto>> findAll(){
+    ResponseEntity<List<TopicoGetDto>> findAll() {
+        return ResponseEntity.ok().body(topicoService.findAllTopicos());
 
-        List<Topico> topicos = topicoRepository.findAll();
-        return ResponseEntity.ok(TopicoDto.converter(topicos));
     }
 
-    @GetMapping(params = {"nomeDoCurso"})
-    ResponseEntity<List<TopicoDto>> findByCursoNome(@RequestParam("nomeDoCurso") String nomeDoCurso){
+    @GetMapping("{id}")
+    ResponseEntity<TopicoGetDto> findById(@PathVariable Long id) throws ResourceNotFoundException {
 
-        List<Topico> topicos = topicoRepository.findByCursoNome(nomeDoCurso);
-        return ResponseEntity.ok(TopicoDto.converter(topicos));
+        TopicoGetDto topicoGetDto = topicoService.findTopicoById(id);
+        return ResponseEntity.ok().body(topicoGetDto);
     }
 
-    @GetMapping(params = {"categoriaDoCurso"})
-    ResponseEntity<List<TopicoDto>> findByCategoriaDoCurso(@RequestParam("categoriaDoCurso") String categoriaDoCurso){
+    @PostMapping
+    ResponseEntity<TopicoGetDto> save(@RequestBody TopicoPostDto topicoPostDto) throws ResourceNotFoundException {
+        TopicoGetDto topicoGetDto = topicoService.saveTopico(topicoPostDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(topicoGetDto);
+    }
 
-        List<Topico> topicos = topicoRepository.findByCategoriaDoCurso(categoriaDoCurso);
-        return ResponseEntity.ok(TopicoDto.converter(topicos));
+    @DeleteMapping({"id"})
+    ResponseEntity<Void> delete(@PathVariable Long id) throws ResourceNotFoundException {
+        topicoService.deleteTopico(id);
+        return ResponseEntity.ok().build();
     }
 }
