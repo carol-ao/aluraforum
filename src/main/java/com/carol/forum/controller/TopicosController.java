@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @Controller
@@ -33,9 +35,10 @@ public class TopicosController {
     }
 
     @PostMapping
-    ResponseEntity<TopicoGetDto> save(@RequestBody TopicoPostDto topicoPostDto) throws ResourceNotFoundException {
+    ResponseEntity<TopicoGetDto> save(@RequestBody TopicoPostDto topicoPostDto, UriComponentsBuilder uriComponentsBuilder) throws ResourceNotFoundException {
         TopicoGetDto topicoGetDto = topicoService.saveTopico(topicoPostDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(topicoGetDto);
+        URI uri = uriComponentsBuilder.path("/topicos/{id").buildAndExpand(topicoGetDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(topicoGetDto);
     }
 
     @DeleteMapping({"id"})

@@ -3,19 +3,15 @@ package com.carol.forum.service;
 import com.carol.forum.controller.dto.TopicoGetDto;
 import com.carol.forum.controller.dto.TopicoPostDto;
 import com.carol.forum.exceptions.ResourceNotFoundException;
-import com.carol.forum.modelo.Curso;
 import com.carol.forum.modelo.StatusTopico;
 import com.carol.forum.modelo.Topico;
-import com.carol.forum.modelo.Usuario;
 import com.carol.forum.repository.CursoRepository;
-import com.carol.forum.repository.TopicoRepository;
 import com.carol.forum.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
