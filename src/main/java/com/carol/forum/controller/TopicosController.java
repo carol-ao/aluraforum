@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class TopicosController {
     }
 
     @PostMapping
-    ResponseEntity<TopicoGetDto> save(@RequestBody TopicoPostDto topicoPostDto, UriComponentsBuilder uriComponentsBuilder) throws ResourceNotFoundException {
+    ResponseEntity<TopicoGetDto> save(@RequestBody @Valid TopicoPostDto topicoPostDto, UriComponentsBuilder uriComponentsBuilder) throws ResourceNotFoundException {
         TopicoGetDto topicoGetDto = topicoService.saveTopico(topicoPostDto);
         URI uri = uriComponentsBuilder.path("/topicos/{id").buildAndExpand(topicoGetDto.getId()).toUri();
         return ResponseEntity.created(uri).body(topicoGetDto);

@@ -1,8 +1,10 @@
 package com.carol.forum.service;
 
+import com.carol.forum.controller.dto.RespostaDto;
 import com.carol.forum.controller.dto.TopicoGetDto;
 import com.carol.forum.controller.dto.TopicoPostDto;
 import com.carol.forum.exceptions.ResourceNotFoundException;
+import com.carol.forum.modelo.Resposta;
 import com.carol.forum.modelo.StatusTopico;
 import com.carol.forum.modelo.Topico;
 import com.carol.forum.repository.CursoRepository;
@@ -33,7 +35,17 @@ public class TopicoMapper {
                 .mensagem(topico.getMensagem())
                 .curso(topico.getCurso().getNome())
                 .statusTopico(topico.getStatus())
+                .respostaDtos(toRespostaDtos(topico.getRespostas()))
                 .build();
+    }
+
+    private List<RespostaDto> toRespostaDtos(List<Resposta> respostas) {
+        return respostas != null ? respostas.stream().map(resposta -> RespostaDto.builder()
+        .id(resposta.getId())
+        .dataCriacao(resposta.getDataCriacao())
+        .nomeAutor(resposta.getAutor().getNome())
+        .mensagem(resposta.getMensagem())
+        .build()).collect(Collectors.toList()) : null;
     }
 
     public Topico toEntity(TopicoPostDto topicoPostDto) throws ResourceNotFoundException {

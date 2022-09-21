@@ -1,11 +1,15 @@
 package com.carol.forum.controller.dto;
 
+import com.carol.forum.modelo.Resposta;
 import com.carol.forum.modelo.StatusTopico;
-import lombok.Builder;
-import lombok.Data;
-import java.time.LocalDateTime;
+import lombok.*;
 
-@Data
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class TopicoGetDto {
 
@@ -16,6 +20,6 @@ public class TopicoGetDto {
     private StatusTopico statusTopico;
     private String autor;
     private String curso;
-
+    private List<RespostaDto> respostaDtos;
 
 }
