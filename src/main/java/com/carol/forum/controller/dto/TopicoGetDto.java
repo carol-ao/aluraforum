@@ -1,6 +1,5 @@
 package com.carol.forum.controller.dto;
 
-import com.carol.forum.modelo.Resposta;
 import com.carol.forum.modelo.StatusTopico;
 import lombok.*;
 
@@ -20,6 +19,6 @@ public class TopicoGetDto {
     private StatusTopico statusTopico;
     private String autor;
     private String curso;
-    private List<RespostaDto> respostaDtos;
+    private List<RespostaGetDto> respostaDtos;
 
 }

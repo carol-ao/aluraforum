@@ -1,6 +1,6 @@
 package com.carol.forum.service;
 
-import com.carol.forum.controller.dto.RespostaDto;
+import com.carol.forum.controller.dto.RespostaGetDto;
 import com.carol.forum.controller.dto.TopicoGetDto;
 import com.carol.forum.controller.dto.TopicoPostDto;
 import com.carol.forum.exceptions.ResourceNotFoundException;
@@ -39,8 +39,8 @@ public class TopicoMapper {
                 .build();
     }
 
-    private List<RespostaDto> toRespostaDtos(List<Resposta> respostas) {
-        return respostas != null ? respostas.stream().map(resposta -> RespostaDto.builder()
+    private List<RespostaGetDto> toRespostaDtos(List<Resposta> respostas) {
+        return respostas != null ? respostas.stream().map(resposta -> RespostaGetDto.builder()
         .id(resposta.getId())
         .dataCriacao(resposta.getDataCriacao())
         .nomeAutor(resposta.getAutor().getNome())

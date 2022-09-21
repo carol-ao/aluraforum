@@ -1,11 +1,17 @@
 package com.carol.forum.modelo;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Resposta {
     @Id
@@ -17,6 +23,5 @@ public class Resposta {
     private LocalDateTime dataCriacao = LocalDateTime.now();
     @ManyToOne
     private Usuario autor;
-    private Boolean solucao = false;
 
 }
