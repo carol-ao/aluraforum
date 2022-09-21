@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/topicos/respostas")
 public class TopicosRespostasController {
@@ -20,9 +22,9 @@ public class TopicosRespostasController {
     RespostaService respostaService;
 
     @PostMapping
-    public ResponseEntity<RespostaGetDto> save(@RequestBody RespostaPostDto respostaPostDto) throws ResourceNotFoundException {
+    public ResponseEntity<RespostaGetDto> save(@RequestBody @Valid RespostaPostDto respostaPostDto) throws ResourceNotFoundException {
         RespostaGetDto respostaGetDto = respostaService.save(respostaPostDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(respostaGetDto);
+        return new ResponseEntity<>(respostaGetDto, HttpStatus.CREATED);
     }
 
 }

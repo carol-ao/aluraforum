@@ -1,9 +1,10 @@
 package com.carol.forum.controller.dto;
 
-import com.carol.forum.modelo.Topico;
-import com.carol.forum.modelo.Usuario;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Builder
@@ -13,9 +14,12 @@ import java.time.LocalDateTime;
 @Setter
 public class RespostaPostDto {
 
-    private Long id;
+    @NotBlank
+    @Length(min = 5)
     private String mensagem;
+    @NotNull
     private Long topicoId;
     private LocalDateTime dataCriacao;
+    @NotNull
     private Long usuarioId;
 }

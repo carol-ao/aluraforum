@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class RespostaService {
@@ -26,14 +24,18 @@ public class RespostaService {
     @Autowired
     TopicoRepository topicoRepository;
 
-    public List<RespostaGetDto> findByTopico(Long topicoId) {
-        List<Resposta> respostas = respostaRepository.findByTopicoId(topicoId);
-        return toRespostaDtos(respostas);
+    public RespostaGetDto findById(Long id) throws ResourceNotFoundException {
+        Resposta resposta = respostaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resposta não encontrada."));
+        return toRespostaGetDto(resposta);
     }
 
     public RespostaGetDto save(RespostaPostDto respostaPostDto) throws ResourceNotFoundException {
         respostaPostDto.setDataCriacao(LocalDateTime.now());
         Resposta resposta = respostaRepository.save(toResposta(respostaPostDto));
+        return toRespostaGetDto(resposta);
+    }
+
+    private RespostaGetDto toRespostaGetDto(Resposta resposta) {
         return RespostaGetDto.builder()
                 .id(resposta.getId())
                 .dataCriacao(resposta.getDataCriacao())
@@ -51,13 +53,4 @@ public class RespostaService {
                 .build();
     }
 
-    private List<RespostaGetDto> toRespostaDtos(List<Resposta> respostas) {
-        return respostas.stream().map(resposta ->
-                RespostaGetDto.builder()
-                        .id(resposta.getId())
-                        .mensagem(resposta.getMensagem())
-                        .dataCriacao(resposta.getDataCriacao())
-                        .nomeAutor(resposta.getAutor().getNome())
-                        .build()).collect(Collectors.toList());
-    }
 }
