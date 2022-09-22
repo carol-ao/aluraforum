@@ -17,8 +17,8 @@ public class TopicoGetDto {
     private String mensagem;
     private LocalDateTime dataDeCriacao;
     private StatusTopico statusTopico;
-    private String autor;
-    private String curso;
+    private Long autorId;
+    private Long cursoId;
     private List<RespostaGetDto> respostaDtos;
 
 }

@@ -1,11 +1,10 @@
 package com.carol.forum.controller;
 
-import com.carol.forum.TopicoService;
+import com.carol.forum.service.TopicoService;
 import com.carol.forum.controller.dto.TopicoGetDto;
 import com.carol.forum.controller.dto.TopicoPostDto;
 import com.carol.forum.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

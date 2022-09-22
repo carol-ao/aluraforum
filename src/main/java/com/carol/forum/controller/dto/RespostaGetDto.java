@@ -1,5 +1,6 @@
 package com.carol.forum.controller.dto;
 
+import com.carol.forum.modelo.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,5 +16,6 @@ public class RespostaGetDto {
     Long id;
     String mensagem;
     LocalDateTime dataCriacao;
-    String nomeAutor;
+    Long usuarioId;
+    Long topicoId;
 }
